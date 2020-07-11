@@ -14,7 +14,7 @@ module.exports = {
       .offset((page - 1) * 5)
       .where({deleted_at: null})
       .orderBy('id', 'desc')
-      .select('id', 'username', 'created_at');
+      .select('id', 'username', 'created_at', 'updated_at');
 
       const [count] = await db('users').count();
 
