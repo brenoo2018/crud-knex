@@ -12,6 +12,7 @@ module.exports = {
       const results =  await db('users')
       .limit(5)
       .offset((page - 1) * 5)
+      .where({deleted_at: null})
       .orderBy('id', 'desc')
       .select('id', 'username', 'created_at');
 
@@ -33,6 +34,13 @@ module.exports = {
     try {
       
     const {username} = req.body;
+
+    const users =  await db('users')
+    .where({'username': username})
+
+    if (users.length > 0) {
+      return res.status(400).json({error: 'usuário já existente'});
+    }
     
     await db('users').insert({
       username
@@ -50,6 +58,13 @@ module.exports = {
       const {id} = req.params;
       const {username} = req.body;
 
+      const users =  await db('users')
+      .where({'id': id, 'deleted_at': null})
+
+      if (users.length === 0) {
+        return res.status(400).json({error: 'usuário não encontrado'});
+      }
+
       await db('users')
       .update({username})
       .where({id});
@@ -66,9 +81,17 @@ module.exports = {
 
       const {id} = req.params;
 
+      const users =  await db('users')
+      .where({'id': id, 'deleted_at': null})
+
+      if (users.length === 0) {
+        return res.status(400).json({error: 'usuário não encontrado'});
+      }
+
       await db('users')
       .where({id})
-      .del();
+      //.del()
+      .update('deleted_at', new Date());
 
       return res.send()
 
