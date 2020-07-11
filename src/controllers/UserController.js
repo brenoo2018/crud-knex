@@ -7,11 +7,19 @@ module.exports = {
 
     try {
 
+      const {page = 1} = req.query;
+
       const results =  await db('users')
+      .limit(5)
+      .offset((page - 1) * 5)
       .orderBy('id', 'desc')
       .select('id', 'username', 'created_at');
 
-    return res.json(results);
+      const [count] = await db('users').count();
+
+      res.header('X-Total-Count', count['count']);
+
+      return res.json(results);
 
     } catch (error) {
 
