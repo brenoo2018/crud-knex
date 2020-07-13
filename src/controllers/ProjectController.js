@@ -30,6 +30,9 @@ module.exports = {
       .leftJoin('users as u', 'u.id', '=', 'p.user_id')
       .select('p.id', 'p.title');
 
+      /**
+       * verifica se existe usuário de msm id e se ele não está deletado
+       */
     if (projects.length === 0) {
       return res.status(400).json({error: 'projeto não encontrado'});
     }
@@ -51,6 +54,9 @@ module.exports = {
       const users =  await db('users')
       .where({'id': user_id, 'deleted_at': null})
 
+      /**
+       * verifica se existe usuário de msm id e se ele não está deletado
+       */
       if (users.length === 0) {
         return res.status(400).json({error: 'usuário não encontrado'});
       }

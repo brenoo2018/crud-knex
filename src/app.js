@@ -10,6 +10,7 @@ const catchAllMiddleware = require('./middlewares/catchAllMiddleware');
 app.use(express.json())
 app.use(routes);
 
+//route not found
 app.use(notFoundMiddleware);
 //catch all
 app.use(catchAllMiddleware);

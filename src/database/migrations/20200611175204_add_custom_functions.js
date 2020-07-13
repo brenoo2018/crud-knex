@@ -1,3 +1,7 @@
+/**
+ * trigger p/ disparar o campo updated_at ao fazer uma atualização
+ */
+
 const CUSTOM_FUNCTIONS = `
 CREATE OR REPLACE FUNCTION on_update_timestamp()
   RETURNS trigger AS $$

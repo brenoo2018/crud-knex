@@ -3,6 +3,9 @@ const {resolve} = require('path');
 
 module.exports = {
 
+  /**
+   * Configuração do banco de dados
+   */
   development: {
     client: 'pg',
     connection: {
@@ -18,6 +21,9 @@ module.exports = {
       directory: resolve(__dirname, 'src', 'database', 'seeds')
     },
   },
+  /**
+   * configurando o disparo da trigger da migration
+   */
   onUpdateTrigger: table  => `
     CREATE TRIGGER ${table}_updated_at
     BEFORE UPDATE ON ${table}
@@ -25,6 +31,7 @@ module.exports = {
     EXECUTE PROCEDURE on_update_timestamp();
   `, 
 
+  /*
   production: {
     client: 'postgresql',
     connection: {
@@ -40,5 +47,6 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
+  */
 
 };

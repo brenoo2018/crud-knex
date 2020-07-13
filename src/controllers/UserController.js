@@ -38,6 +38,9 @@ module.exports = {
     const users =  await db('users')
     .where({'username': username})
 
+    /**
+     * verifica se já existe username de mesmo nome
+     */
     if (users.length > 0) {
       return res.status(400).json({error: 'usuário já existente'});
     }
@@ -61,6 +64,9 @@ module.exports = {
       const users =  await db('users')
       .where({'id': id, 'deleted_at': null})
 
+      /**
+       * verifica se existe usuário de msm id e se ele não está deletado
+       */
       if (users.length === 0) {
         return res.status(400).json({error: 'usuário não encontrado'});
       }
@@ -84,6 +90,9 @@ module.exports = {
       const users =  await db('users')
       .where({'id': id, 'deleted_at': null})
 
+      /**
+       * verifica se existe usuário de msm id e se ele não está deletado
+       */
       if (users.length === 0) {
         return res.status(400).json({error: 'usuário não encontrado'});
       }

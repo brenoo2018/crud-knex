@@ -12,6 +12,6 @@ exports.up = async (knex) =>  knex.schema.createTable('projects', table => {
     .onUpdate('CASCADE')
 
   table.timestamps(true, true)
-}).then(() => knex.raw(onUpdateTrigger('projects')))
+}).then(() => knex.raw(onUpdateTrigger('projects'))) // disparando a trigger
 
 exports.down = async knex => knex.schema.dropTable('projects')
